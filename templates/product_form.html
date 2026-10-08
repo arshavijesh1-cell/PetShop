@@ -1,0 +1,697 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if product %}
+Edit Product - PetShop
+{% else %}
+Add Product - PetShop
+{% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+/* ===================================================== */
+/* FORM SECTION */
+/* ===================================================== */
+
+.product-form-section {
+
+    min-height: 78vh;
+
+    padding: 65px 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff8f2,
+            #f8f9fa
+        );
+}
+
+
+/* ===================================================== */
+/* FORM CARD */
+/* ===================================================== */
+
+.form-card {
+
+    background: white;
+
+    max-width: 720px;
+
+    margin: auto;
+
+    padding: 42px;
+
+    border-radius: 22px;
+
+    border: 1px solid #eeeeee;
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.08);
+
+}
+
+
+/* ===================================================== */
+/* HEADER */
+/* ===================================================== */
+
+.form-header {
+
+    text-align: center;
+
+    margin-bottom: 35px;
+
+}
+
+
+.form-icon {
+
+    width: 65px;
+
+    height: 65px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #fff1e3;
+
+    color: #ff7a00;
+
+    font-size: 28px;
+
+}
+
+
+.form-title {
+
+    font-size: 30px;
+
+    font-weight: 800;
+
+    color: #222;
+
+    margin-bottom: 8px;
+
+}
+
+
+.form-subtitle {
+
+    color: #777;
+
+    font-size: 14px;
+
+    margin-bottom: 0;
+
+}
+
+
+/* ===================================================== */
+/* FORM LABEL */
+/* ===================================================== */
+
+.form-label {
+
+    display: block;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: #333;
+
+    margin-bottom: 8px;
+
+}
+
+
+/* ===================================================== */
+/* INPUTS */
+/* ===================================================== */
+
+.form-control,
+.form-select {
+
+    min-height: 48px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 9px;
+
+    padding: 11px 13px;
+
+    font-size: 14px;
+
+    transition: 0.25s;
+
+}
+
+
+textarea.form-control {
+
+    min-height: 120px;
+
+    resize: vertical;
+
+}
+
+
+.form-control:focus,
+.form-select:focus {
+
+    border-color: #ff7a00;
+
+    box-shadow:
+        0 0 0 0.2rem rgba(255, 122, 0, 0.12);
+
+}
+
+
+/* ===================================================== */
+/* IMAGE INPUT */
+/* ===================================================== */
+
+.image-input {
+
+    padding: 9px 12px;
+
+}
+
+
+.current-image {
+
+    margin-top: 10px;
+
+    padding: 10px;
+
+    background: #fff8f2;
+
+    border-radius: 8px;
+
+    color: #777;
+
+    font-size: 13px;
+
+}
+
+
+.current-image strong {
+
+    color: #333;
+
+}
+
+
+/* ===================================================== */
+/* FORM ROW */
+/* ===================================================== */
+
+.form-row {
+
+    margin-bottom: 20px;
+
+}
+
+
+/* ===================================================== */
+/* BUTTONS */
+/* ===================================================== */
+
+.form-actions {
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 30px;
+
+}
+
+
+.submit-btn {
+
+    flex: 1;
+
+    border: none;
+
+    padding: 13px 20px;
+
+    border-radius: 9px;
+
+    background: #ff7a00;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    transition: 0.3s;
+
+}
+
+
+.submit-btn:hover {
+
+    background: #e66d00;
+
+    color: white;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 18px rgba(255,122,0,0.20);
+
+}
+
+
+.cancel-btn {
+
+    flex: 1;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 13px 20px;
+
+    border-radius: 9px;
+
+    background: #f1f3f5;
+
+    color: #444;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: 0.3s;
+
+}
+
+
+.cancel-btn:hover {
+
+    background: #e2e6ea;
+
+    color: #222;
+
+}
+
+
+/* ===================================================== */
+/* REQUIRED STAR */
+/* ===================================================== */
+
+.required {
+
+    color: #dc3545;
+
+}
+
+
+/* ===================================================== */
+/* RESPONSIVE */
+/* ===================================================== */
+
+@media (max-width: 576px) {
+
+    .product-form-section {
+
+        padding: 40px 15px;
+
+    }
+
+
+    .form-card {
+
+        padding: 28px 22px;
+
+        border-radius: 18px;
+
+    }
+
+
+    .form-title {
+
+        font-size: 25px;
+
+    }
+
+
+    .form-actions {
+
+        flex-direction: column;
+
+    }
+
+
+    .submit-btn,
+    .cancel-btn {
+
+        width: 100%;
+
+    }
+
+}
+
+</style>
+
+
+
+<!-- ===================================================== -->
+<!-- PRODUCT FORM SECTION -->
+<!-- ===================================================== -->
+
+<section class="product-form-section">
+
+    <div class="container">
+
+
+        <div class="form-card">
+
+
+            <!-- ================================================= -->
+            <!-- HEADER -->
+            <!-- ================================================= -->
+
+            <div class="form-header">
+
+                <div class="form-icon">
+
+                    {% if product %}
+
+                        <i class="bi bi-pencil-square"></i>
+
+                    {% else %}
+
+                        <i class="bi bi-plus-lg"></i>
+
+                    {% endif %}
+
+                </div>
+
+
+                <h1 class="form-title">
+
+                    {% if product %}
+
+                        Edit Product
+
+                    {% else %}
+
+                        Add New Product
+
+                    {% endif %}
+
+                </h1>
+
+
+                <p class="form-subtitle">
+
+                    {% if product %}
+
+                        Update the product information below.
+
+                    {% else %}
+
+                        Add a new product to your PetShop collection.
+
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+
+
+            <!-- ================================================= -->
+            <!-- FORM -->
+            <!-- ================================================= -->
+
+            <form
+                method="POST"
+                enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+
+                <!-- PRODUCT NAME -->
+
+                <div class="form-row">
+
+                    <label class="form-label">
+
+                        Product Name
+
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <input
+                        type="text"
+                        name="name"
+                        class="form-control"
+                        placeholder="Enter product name"
+                        value="{{ product.name|default:'' }}"
+                        required>
+
+                </div>
+
+
+
+                <!-- CATEGORY -->
+
+                <div class="form-row">
+
+                    <label class="form-label">
+
+                        Category
+
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <select
+                        name="category"
+                        class="form-select"
+                        required>
+
+                        <option value="">
+                            Select Category
+                        </option>
+
+
+                        {% for category in categories %}
+
+                            <option
+                                value="{{ category.id }}"
+
+                                {% if product and product.category.id == category.id %}
+                                    selected
+                                {% endif %}
+                            >
+
+                                {{ category.name }}
+
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-row">
+
+                    <label class="form-label">
+
+                        Description
+
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <textarea
+                        name="description"
+                        class="form-control"
+                        placeholder="Enter product description"
+                        required>{{ product.description|default:'' }}</textarea>
+
+                </div>
+
+
+
+                <!-- PRICE -->
+
+                <div class="form-row">
+
+                    <label class="form-label">
+
+                        Price
+
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+                            ₹
+                        </span>
+
+                        <input
+                            type="number"
+                            name="price"
+                            class="form-control"
+                            step="0.01"
+                            min="0"
+                            placeholder="Enter price"
+                            value="{{ product.price|default:'' }}"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- STOCK -->
+
+                <div class="form-row">
+
+                    <label class="form-label">
+
+                        Stock Quantity
+
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <input
+                        type="number"
+                        name="stock"
+                        class="form-control"
+                        min="0"
+                        placeholder="Enter stock quantity"
+                        value="{{ product.stock|default:'' }}"
+                        required>
+
+                </div>
+
+
+
+                <!-- IMAGE -->
+
+                <div class="form-row">
+
+                    <label class="form-label">
+
+                        Product Image
+
+                    </label>
+
+
+                    <input
+                        type="file"
+                        name="image"
+                        class="form-control image-input"
+                        accept="image/*">
+
+
+                    {% if product and product.image %}
+
+                        <div class="current-image">
+
+                            <i class="bi bi-image me-1"></i>
+
+                            Current image:
+                            
+                            <strong>
+                                {{ product.image.name }}
+                            </strong>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+
+                <!-- ================================================= -->
+                <!-- ACTION BUTTONS -->
+                <!-- ================================================= -->
+
+                <div class="form-actions">
+
+
+                    <a
+                        href="{% url 'product_list' %}"
+                        class="cancel-btn">
+
+                        <i class="bi bi-arrow-left me-2"></i>
+
+                        Cancel
+
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="submit-btn">
+
+                        {% if product %}
+
+                            <i class="bi bi-check-lg me-2"></i>
+
+                            Update Product
+
+                        {% else %}
+
+                            <i class="bi bi-plus-lg me-2"></i>
+
+                            Add Product
+
+                        {% endif %}
+
+                    </button>
+
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,1288 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+PetShop - Home
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<!-- ===================================================== -->
+<!-- INTERNAL CSS -->
+<!-- ===================================================== -->
+
+<style>
+
+
+/* ================= HERO ================= */
+
+.hero-section {
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff4e8,
+            #ffffff
+        );
+
+    padding: 85px 0;
+
+    overflow: hidden;
+}
+
+
+.hero-title {
+
+    font-size: 52px;
+
+    font-weight: 800;
+
+    line-height: 1.15;
+
+    margin-bottom: 20px;
+}
+
+
+.hero-title span {
+
+    color: #ff7a00;
+
+}
+
+
+.hero-description {
+
+    color: #777;
+
+    font-size: 18px;
+
+    line-height: 1.7;
+
+    max-width: 540px;
+
+    margin-bottom: 30px;
+}
+
+
+/* ================= HERO BUTTONS ================= */
+
+.hero-btn {
+
+    display: inline-block;
+
+    background: #ff7a00;
+
+    color: white;
+
+    padding: 13px 28px;
+
+    border-radius: 30px;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+
+.hero-btn:hover {
+
+    background: #e66d00;
+
+    color: white;
+
+    transform: translateY(-3px);
+
+}
+
+
+.hero-secondary-btn {
+
+    display: inline-block;
+
+    margin-left: 10px;
+
+    padding: 12px 25px;
+
+    border: 2px solid #ff7a00;
+
+    border-radius: 30px;
+
+    color: #ff7a00;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+
+.hero-secondary-btn:hover {
+
+    background: #ff7a00;
+
+    color: white;
+
+}
+
+
+/* ================= HERO PET ICON ================= */
+
+.hero-pets {
+
+    position: relative;
+
+    text-align: center;
+
+}
+
+
+.hero-pets-main {
+
+    font-size: 145px;
+
+    display: inline-block;
+
+    animation: petFloat 3s ease-in-out infinite;
+}
+
+
+@keyframes petFloat {
+
+    0% {
+
+        transform: translateY(0);
+
+    }
+
+    50% {
+
+        transform: translateY(-12px);
+
+    }
+
+    100% {
+
+        transform: translateY(0);
+
+    }
+
+}
+
+
+/* Decorative circles */
+
+.pet-circle {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    background: #ffe6cc;
+
+    opacity: 0.7;
+
+}
+
+
+.circle-one {
+
+    width: 90px;
+
+    height: 90px;
+
+    top: 20px;
+
+    right: 80px;
+}
+
+
+.circle-two {
+
+    width: 55px;
+
+    height: 55px;
+
+    bottom: 20px;
+
+    left: 90px;
+}
+
+
+/* ================= CATEGORY ================= */
+
+.category-card {
+
+    background: white;
+
+    border: none;
+
+    border-radius: 18px;
+
+    padding: 30px 20px;
+
+    height: 100%;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,0.06);
+
+    transition: all 0.3s ease;
+
+}
+
+
+.category-card:hover {
+
+    transform: translateY(-8px);
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,0.12);
+
+}
+
+
+.category-icon {
+
+    width: 75px;
+
+    height: 75px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin: 0 auto 18px;
+
+    border-radius: 50%;
+
+    background: #fff4e8;
+
+    color: #ff7a00;
+
+    font-size: 38px;
+
+}
+
+
+.category-name {
+
+    font-size: 19px;
+
+    font-weight: 700;
+
+    margin-bottom: 15px;
+
+}
+
+
+.category-btn {
+
+    display: inline-block;
+
+    color: #ff7a00;
+
+    border: 1px solid #ff7a00;
+
+    padding: 8px 18px;
+
+    border-radius: 20px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+
+}
+
+
+.category-btn:hover {
+
+    background: #ff7a00;
+
+    color: white;
+
+}
+
+
+/* ================= PRODUCT SECTION ================= */
+
+.product-section {
+
+    background: #f8f9fa;
+
+}
+
+
+/* ================= PRODUCT CARD ================= */
+
+.home-product-card {
+
+    background: white;
+
+    border: none;
+
+    border-radius: 17px;
+
+    overflow: hidden;
+
+    height: 100%;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,0.06);
+
+    transition: all 0.3s ease;
+
+}
+
+
+.home-product-card:hover {
+
+    transform: translateY(-7px);
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,0.12);
+
+}
+
+
+/* ================= PRODUCT IMAGE ================= */
+
+.home-product-image {
+
+    width: 100%;
+
+    height: 220px;
+
+    object-fit: cover;
+
+}
+
+
+.home-no-image {
+
+    height: 220px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #fff4e8;
+
+    font-size: 70px;
+
+}
+
+
+/* ================= PRODUCT BODY ================= */
+
+.home-product-body {
+
+    padding: 20px;
+
+}
+
+
+.home-product-category {
+
+    color: #888;
+
+    font-size: 13px;
+
+    margin-bottom: 6px;
+
+}
+
+
+.home-product-name {
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    margin-bottom: 8px;
+
+}
+
+
+.home-product-price {
+
+    color: #ff7a00;
+
+    font-size: 21px;
+
+    font-weight: 800;
+
+    margin-bottom: 12px;
+
+}
+
+
+/* ================= PRODUCT BUTTON ================= */
+
+.view-product-btn {
+
+    display: block;
+
+    width: 100%;
+
+    text-align: center;
+
+    background: #222;
+
+    color: white;
+
+    padding: 10px;
+
+    border-radius: 9px;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+
+}
+
+
+.view-product-btn:hover {
+
+    background: #ff7a00;
+
+    color: white;
+
+}
+
+
+/* ================= VIEW ALL ================= */
+
+.view-all-btn {
+
+    display: inline-block;
+
+    margin-top: 40px;
+
+    padding: 12px 27px;
+
+    border: 2px solid #ff7a00;
+
+    color: #ff7a00;
+
+    border-radius: 25px;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+
+}
+
+
+.view-all-btn:hover {
+
+    background: #ff7a00;
+
+    color: white;
+
+}
+
+
+/* ================= WHY PETSHOP ================= */
+
+.why-section {
+
+    background: white;
+
+}
+
+
+.feature-box {
+
+    text-align: center;
+
+    padding: 25px;
+
+}
+
+
+.feature-icon {
+
+    width: 65px;
+
+    height: 65px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin: 0 auto 15px;
+
+    border-radius: 50%;
+
+    background: #fff4e8;
+
+    color: #ff7a00;
+
+    font-size: 28px;
+
+}
+
+
+.feature-title {
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    margin-bottom: 8px;
+
+}
+
+
+.feature-text {
+
+    color: #777;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+}
+
+
+/* ================= EMPTY ================= */
+
+.empty-box {
+
+    background: white;
+
+    border-radius: 15px;
+
+    padding: 60px 20px;
+
+    text-align: center;
+
+}
+
+
+.empty-icon {
+
+    font-size: 65px;
+
+    margin-bottom: 15px;
+
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 991px) {
+
+
+    .hero-title {
+
+        font-size: 43px;
+
+    }
+
+
+    .hero-pets {
+
+        margin-top: 40px;
+
+    }
+
+
+}
+
+
+@media (max-width: 576px) {
+
+
+    .hero-section {
+
+        padding: 55px 0;
+
+    }
+
+
+    .hero-title {
+
+        font-size: 34px;
+
+    }
+
+
+    .hero-description {
+
+        font-size: 16px;
+
+    }
+
+
+    .hero-pets-main {
+
+        font-size: 100px;
+
+    }
+
+
+    .hero-secondary-btn {
+
+        margin-left: 0;
+
+        margin-top: 10px;
+
+    }
+
+
+}
+
+
+</style>
+
+
+
+<!-- ===================================================== -->
+<!-- HERO SECTION -->
+<!-- ===================================================== -->
+
+<section class="hero-section">
+
+
+    <div class="container">
+
+
+        <div class="row align-items-center">
+
+
+            <!-- HERO TEXT -->
+
+            <div class="col-lg-6">
+
+
+                <div class="mb-2">
+
+                    <span class="text-secondary fw-semibold">
+
+                        🐾 Welcome to PetShop
+
+                    </span>
+
+                </div>
+
+
+                <h1 class="hero-title">
+
+                    Everything Your
+
+                    <span>Pet</span>
+
+                    Needs
+
+                </h1>
+
+
+                <p class="hero-description">
+
+                    Discover quality food, toys and
+                    accessories for your lovely pets.
+                    Give your furry friends the care
+                    they deserve.
+
+                </p>
+
+
+                <div>
+
+
+                    <a
+                        href="{% url 'product_list' %}"
+                        class="hero-btn">
+
+                        <i class="bi bi-bag-heart me-2"></i>
+
+                        Shop Now
+
+                    </a>
+
+
+                    <a
+                        href="#categories"
+                        class="hero-secondary-btn">
+
+                        Explore Categories
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- HERO PET -->
+
+            <div class="col-lg-6">
+
+
+                <div class="hero-pets">
+
+
+                    <div class="pet-circle circle-one"></div>
+
+                    <div class="pet-circle circle-two"></div>
+
+
+                    <div class="hero-pets-main">
+
+                        🐶 🐱
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ===================================================== -->
+<!-- CATEGORY SECTION -->
+<!-- ===================================================== -->
+
+<section
+    class="page-section"
+    id="categories">
+
+
+    <div class="container">
+
+
+        <!-- SECTION TITLE -->
+
+        <div class="text-center mb-5">
+
+
+            <div class="text-uppercase small orange fw-bold mb-2">
+
+                Explore
+
+            </div>
+
+
+            <h2 class="section-title">
+
+                Shop By Category
+
+            </h2>
+
+
+            <p class="section-subtitle">
+
+                Find everything your pet needs
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- CATEGORY CARDS -->
+
+        <div class="row g-4">
+
+
+            {% for category in categories %}
+
+
+            <div class="col-lg-4 col-md-6">
+
+
+                <div class="category-card text-center">
+
+
+                    <!-- ICON -->
+
+                    <div class="category-icon">
+
+                        <i class="bi bi-heart-fill"></i>
+
+                    </div>
+
+
+                    <!-- NAME -->
+
+                    <div class="category-name">
+
+                        {{ category.name }}
+
+                    </div>
+
+
+                    <!-- BUTTON -->
+
+                    <a
+                        href="{% url 'product_list' %}?category={{ category.id }}"
+                        class="category-btn">
+
+                        View Products
+
+                        <i class="bi bi-arrow-right ms-1"></i>
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+            {% empty %}
+
+
+            <div class="col-12">
+
+
+                <div class="empty-box">
+
+
+                    <div class="empty-icon">
+
+                        🐾
+
+                    </div>
+
+
+                    <h4 class="fw-bold">
+
+                        No Categories Available
+
+                    </h4>
+
+
+                    <p class="text-secondary mb-0">
+
+                        Categories will appear here
+                        once they are added.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ===================================================== -->
+<!-- PRODUCTS SECTION -->
+<!-- ===================================================== -->
+
+<section class="page-section product-section">
+
+
+    <div class="container">
+
+
+        <!-- SECTION TITLE -->
+
+        <div class="text-center mb-5">
+
+
+            <div class="text-uppercase small orange fw-bold mb-2">
+
+                Our Collection
+
+            </div>
+
+
+            <h2 class="section-title">
+
+                Latest Products
+
+            </h2>
+
+
+            <p class="section-subtitle">
+
+                Best products for your lovely pets
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- PRODUCTS -->
+
+        <div class="row g-4">
+
+
+            {% for product in products %}
+
+
+            <div class="col-xl-3 col-lg-4 col-md-6">
+
+
+                <div class="home-product-card">
+
+
+                    <!-- PRODUCT IMAGE -->
+
+                    {% if product.image %}
+
+
+                    <img
+                        src="{{ product.image.url }}"
+                        class="home-product-image"
+                        alt="{{ product.name }}">
+
+
+                    {% else %}
+
+
+                    <div class="home-no-image">
+
+                        🐾
+
+                    </div>
+
+
+                    {% endif %}
+
+
+
+                    <!-- PRODUCT BODY -->
+
+                    <div class="home-product-body">
+
+
+                        <!-- CATEGORY -->
+
+                        <div class="home-product-category">
+
+                            <i class="bi bi-tag me-1"></i>
+
+                            {{ product.category.name }}
+
+                        </div>
+
+
+                        <!-- NAME -->
+
+                        <div class="home-product-name">
+
+                            {{ product.name }}
+
+                        </div>
+
+
+                        <!-- PRICE -->
+
+                        <div class="home-product-price">
+
+                            ₹{{ product.price }}
+
+                        </div>
+
+
+                        <!-- DETAILS -->
+
+                        <a
+                            href="{% url 'product_detail' product.id %}"
+                            class="view-product-btn">
+
+                            <i class="bi bi-eye me-1"></i>
+
+                            View Details
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            {% empty %}
+
+
+            <div class="col-12">
+
+
+                <div class="empty-box">
+
+
+                    <div class="empty-icon">
+
+                        🐾
+
+                    </div>
+
+
+                    <h4 class="fw-bold">
+
+                        No Products Available
+
+                    </h4>
+
+
+                    <p class="text-secondary">
+
+                        Products will appear here
+                        once they are added.
+
+                    </p>
+
+
+                    <a
+                        href="{% url 'product_list' %}"
+                        class="btn btn-pet">
+
+                        View Products
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+
+        <!-- VIEW ALL PRODUCTS -->
+
+        {% if products %}
+
+        <div class="text-center">
+
+
+            <a
+                href="{% url 'product_list' %}"
+                class="view-all-btn">
+
+                View All Products
+
+                <i class="bi bi-arrow-right ms-1"></i>
+
+            </a>
+
+
+        </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ===================================================== -->
+<!-- WHY PETSHOP -->
+<!-- ===================================================== -->
+
+<section class="page-section why-section">
+
+
+    <div class="container">
+
+
+        <div class="text-center mb-5">
+
+
+            <div class="text-uppercase small orange fw-bold mb-2">
+
+                Why Choose Us
+
+            </div>
+
+
+            <h2 class="section-title">
+
+                Everything For Your Pet
+
+            </h2>
+
+
+            <p class="section-subtitle">
+
+                We make pet shopping simple and enjoyable.
+
+            </p>
+
+
+        </div>
+
+
+
+        <div class="row g-4">
+
+
+            <!-- FEATURE 1 -->
+
+            <div class="col-md-4">
+
+
+                <div class="feature-box">
+
+
+                    <div class="feature-icon">
+
+                        <i class="bi bi-shield-check"></i>
+
+                    </div>
+
+
+                    <div class="feature-title">
+
+                        Quality Products
+
+                    </div>
+
+
+                    <p class="feature-text">
+
+                        Carefully selected products
+                        for your pet's everyday needs.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- FEATURE 2 -->
+
+            <div class="col-md-4">
+
+
+                <div class="feature-box">
+
+
+                    <div class="feature-icon">
+
+                        <i class="bi bi-truck"></i>
+
+                    </div>
+
+
+                    <div class="feature-title">
+
+                        Easy Shopping
+
+                    </div>
+
+
+                    <p class="feature-text">
+
+                        Find your favourite pet products
+                        quickly and easily.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- FEATURE 3 -->
+
+            <div class="col-md-4">
+
+
+                <div class="feature-box">
+
+
+                    <div class="feature-icon">
+
+                        <i class="bi bi-heart"></i>
+
+                    </div>
+
+
+                    <div class="feature-title">
+
+                        Made With Love
+
+                    </div>
+
+
+                    <p class="feature-text">
+
+                        Everything we offer is chosen
+                        with your pets in mind.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+{% endblock %}
