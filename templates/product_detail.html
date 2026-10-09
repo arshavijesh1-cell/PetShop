@@ -1,959 +1,251 @@
+```html
 {% extends 'base.html' %}
 
-{% block title %}
-{{ product.name }} - PetShop
-{% endblock %}
-
+{% block title %}{{ product.name }} | PetShop{% endblock %}
 
 {% block content %}
 
 <style>
-
-/* ===================================================== */
-/* PRODUCT DETAIL PAGE */
-/* ===================================================== */
-
-.detail-section {
-
-    min-height: 75vh;
-
-    padding: 65px 0;
-
-    background:
-        linear-gradient(
-            135deg,
-            #fff8f2,
-            #f8f9fa
-        );
-}
-
-
-/* ===================================================== */
-/* BREADCRUMB */
-/* ===================================================== */
-
-.breadcrumb-area {
-
-    margin-bottom: 25px;
-
-    font-size: 14px;
-}
-
-.breadcrumb-area a {
-
-    color: #ff7a00;
-
-    text-decoration: none;
-
-    font-weight: 600;
-
-}
-
-.breadcrumb-area a:hover {
-
-    color: #e66d00;
-
-}
-
-.breadcrumb-current {
-
-    color: #777;
-
-}
-
-
-/* ===================================================== */
-/* MAIN CARD */
-/* ===================================================== */
-
-.product-detail-card {
-
-    background: white;
-
-    border-radius: 22px;
-
-    overflow: hidden;
-
-    box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.08);
-
-    border: 1px solid #eeeeee;
-}
-
-
-/* ===================================================== */
-/* IMAGE AREA */
-/* ===================================================== */
-
-.product-image-box {
-
-    min-height: 560px;
-
-    padding: 35px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background:
-        linear-gradient(
-            135deg,
-            #fff0df,
-            #fff8f2
-        );
-
-}
-
-
-.product-image-box img {
-
-    width: 100%;
-
-    max-height: 500px;
-
-    object-fit: contain;
-
-    border-radius: 15px;
-
-    transition: 0.4s;
-
-}
-
-
-.product-image-box img:hover {
-
-    transform: scale(1.03);
-
-}
-
-
-.no-product-image {
-
-    width: 180px;
-
-    height: 180px;
-
-    border-radius: 50%;
-
-    background: white;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 90px;
-
-    box-shadow:
-        0 8px 25px rgba(0,0,0,0.08);
-
-}
-
-
-/* ===================================================== */
-/* PRODUCT CONTENT */
-/* ===================================================== */
-
-.product-detail-content {
-
-    padding: 50px;
-
-}
-
-
-/* ===================================================== */
-/* CATEGORY */
-/* ===================================================== */
-
-.product-category {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 6px;
-
-    padding: 7px 14px;
-
-    border-radius: 20px;
-
-    background: #fff1e3;
-
-    color: #ff7a00;
-
-    font-size: 13px;
-
-    font-weight: 700;
-
-    margin-bottom: 18px;
-
-}
-
-
-/* ===================================================== */
-/* PRODUCT TITLE */
-/* ===================================================== */
-
-.product-title {
-
-    font-size: 42px;
-
-    font-weight: 800;
-
-    line-height: 1.15;
-
-    color: #222;
-
-    margin-bottom: 15px;
-
-}
-
-
-/* ===================================================== */
-/* RATING */
-/* ===================================================== */
-
-.product-rating {
-
-    color: #f5a623;
-
-    font-size: 14px;
-
-    margin-bottom: 18px;
-
-}
-
-
-/* ===================================================== */
-/* PRICE */
-/* ===================================================== */
-
-.product-price {
-
-    font-size: 34px;
-
-    font-weight: 800;
-
-    color: #ff7a00;
-
-    margin-bottom: 20px;
-
-}
-
-
-/* ===================================================== */
-/* DESCRIPTION */
-/* ===================================================== */
-
-.product-description {
-
-    color: #666;
-
-    font-size: 15px;
-
-    line-height: 1.8;
-
-    margin-bottom: 25px;
-
-}
-
-
-/* ===================================================== */
-/* STOCK */
-/* ===================================================== */
-
-.stock-box {
-
-    padding: 12px 15px;
-
-    border-radius: 9px;
-
-    margin-bottom: 25px;
-
-    background: #f8f9fa;
-
-}
-
-
-.stock-available {
-
-    color: #198754;
-
-    font-size: 14px;
-
-    font-weight: 700;
-
-}
-
-
-.stock-out {
-
-    color: #dc3545;
-
-    font-size: 14px;
-
-    font-weight: 700;
-
-}
-
-
-/* ===================================================== */
-/* QUANTITY */
-/* ===================================================== */
-
-.quantity-title {
-
-    font-size: 14px;
-
-    font-weight: 700;
-
-    margin-bottom: 9px;
-
-}
-
-
-.quantity-box {
-
-    width: 145px;
-
-    height: 45px;
-
-    display: flex;
-
-    align-items: center;
-
-    overflow: hidden;
-
-    border: 1px solid #ddd;
-
-    border-radius: 9px;
-
-    margin-bottom: 20px;
-
-    background: white;
-
-}
-
-
-.quantity-btn {
-
-    width: 45px;
-
-    height: 45px;
-
-    border: none;
-
-    background: #f1f3f5;
-
-    font-size: 21px;
-
-    font-weight: 700;
-
-    transition: 0.2s;
-
-}
-
-
-.quantity-btn:hover {
-
-    background: #ff7a00;
-
-    color: white;
-
-}
-
-
-.quantity-input {
-
-    width: 55px;
-
-    height: 45px;
-
-    border: none;
-
-    outline: none;
-
-    text-align: center;
-
-    font-size: 16px;
-
-    font-weight: 700;
-
-    color: #222;
-
-}
-
-
-/* ===================================================== */
-/* ADD CART */
-/* ===================================================== */
-
-.add-cart-btn {
-
-    width: 100%;
-
-    padding: 14px 20px;
-
-    border: none;
-
-    border-radius: 10px;
-
-    background: #ff7a00;
-
-    color: white;
-
-    font-size: 16px;
-
-    font-weight: 700;
-
-    transition: 0.3s;
-
-}
-
-
-.add-cart-btn:hover {
-
-    background: #e66d00;
-
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 6px 18px rgba(255,122,0,0.25);
-
-}
-
-
-.disabled-cart-btn {
-
-    width: 100%;
-
-    padding: 14px 20px;
-
-    border: none;
-
-    border-radius: 10px;
-
-    background: #adb5bd;
-
-    color: white;
-
-    font-weight: 700;
-
-}
-
-
-/* ===================================================== */
-/* PRODUCT INFORMATION */
-/* ===================================================== */
-
-.product-info {
-
-    border-top: 1px solid #eeeeee;
-
-    margin-top: 28px;
-
-    padding-top: 18px;
-
-}
-
-
-.info-row {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    padding: 9px 0;
-
-    font-size: 14px;
-
-    color: #777;
-
-}
-
-
-.info-row strong {
-
-    color: #222;
-
-}
-
-
-/* ===================================================== */
-/* BACK BUTTON */
-/* ===================================================== */
-
-.back-btn {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 6px;
-
-    margin-top: 18px;
-
-    color: #555;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-    text-decoration: none;
-
-}
-
-
-.back-btn:hover {
-
-    color: #ff7a00;
-
-}
-
-
-/* ===================================================== */
-/* RESPONSIVE */
-/* ===================================================== */
-
-@media (max-width: 991px) {
+    .detail-container {
+        padding-top: 35px;
+        padding-bottom: 50px;
+    }
+
+    .product-card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    }
 
     .product-image-box {
-
-        min-height: 430px;
-
+        background: #fff4e8;
+        border-radius: 12px;
+        min-height: 350px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
     }
 
-
-    .product-detail-content {
-
-        padding: 35px;
-
+    .product-image {
+        width: 100%;
+        max-height: 350px;
+        object-fit: contain;
     }
 
-
-    .product-title {
-
-        font-size: 34px;
-
+    .no-image {
+        font-size: 100px;
     }
 
-}
-
-
-@media (max-width: 576px) {
-
-    .detail-section {
-
-        padding: 40px 0;
-
+    .product-name {
+        color: #333;
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 15px;
     }
 
-
-    .product-image-box {
-
-        min-height: 300px;
-
-        padding: 25px;
-
+    .category-badge {
+        display: inline-block;
+        background: #fff0df;
+        color: #e66d00;
+        padding: 7px 14px;
+        border-radius: 20px;
+        font-size: 14px;
+        margin-bottom: 15px;
     }
-
-
-    .no-product-image {
-
-        width: 140px;
-
-        height: 140px;
-
-        font-size: 70px;
-
-    }
-
-
-    .product-detail-content {
-
-        padding: 25px;
-
-    }
-
-
-    .product-title {
-
-        font-size: 29px;
-
-    }
-
 
     .product-price {
-
-        font-size: 28px;
-
+        color: #ff7a00;
+        font-size: 30px;
+        font-weight: bold;
+        margin: 15px 0;
     }
 
-}
+    .product-description {
+        color: #666;
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
 
+    .stock-available {
+        color: #198754;
+        font-weight: bold;
+    }
+
+    .stock-out {
+        color: #dc3545;
+        font-weight: bold;
+    }
+
+    .quantity-input {
+        width: 100px;
+        padding: 9px;
+        border: 1px solid #ddd;
+        border-radius: 7px;
+    }
+
+    .cart-btn {
+        background: #ff7a00;
+        color: white;
+        border: none;
+        padding: 12px 22px;
+        border-radius: 8px;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+
+    .cart-btn:hover {
+        background: #e66d00;
+    }
+
+    .cart-btn:disabled {
+        background: #aaa;
+        cursor: not-allowed;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-top: 20px;
+        color: #ff7a00;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .back-btn:hover {
+        color: #e66d00;
+    }
+
+    @media (max-width: 768px) {
+        .product-card {
+            padding: 18px;
+        }
+
+        .product-name {
+            font-size: 25px;
+        }
+
+        .product-image-box {
+            min-height: 250px;
+            margin-bottom: 25px;
+        }
+    }
 </style>
 
+<div class="container detail-container">
 
+    <div class="product-card">
 
-<!-- ===================================================== -->
-<!-- PRODUCT DETAIL -->
-<!-- ===================================================== -->
+        <div class="row align-items-center">
 
-<section class="detail-section">
+            <!-- Product Image -->
+            <div class="col-md-6">
 
-    <div class="container">
+                <div class="product-image-box">
 
-
-        <!-- BREADCRUMB -->
-
-        <div class="breadcrumb-area">
-
-            <a href="{% url 'home' %}">
-                Home
-            </a>
-
-            <span class="mx-2">/</span>
-
-            <a href="{% url 'product_list' %}">
-                Products
-            </a>
-
-            <span class="mx-2">/</span>
-
-            <span class="breadcrumb-current">
-                {{ product.name }}
-            </span>
-
-        </div>
-
-
-
-        <!-- PRODUCT CARD -->
-
-        <div class="product-detail-card">
-
-            <div class="row g-0">
-
-
-                <!-- ================================================= -->
-                <!-- PRODUCT IMAGE -->
-                <!-- ================================================= -->
-
-                <div class="col-lg-6">
-
-                    <div class="product-image-box">
-
-                        {% if product.image %}
-
-                            <img
-                                src="{{ product.image.url }}"
-                                alt="{{ product.name }}">
-
-                        {% else %}
-
-                            <div class="no-product-image">
-
-                                🐾
-
-                            </div>
-
-                        {% endif %}
-
-                    </div>
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}"
+                             alt="{{ product.name }}"
+                             class="product-image">
+                    {% else %}
+                        <div class="no-image">🐾</div>
+                    {% endif %}
 
                 </div>
 
+            </div>
 
+            <!-- Product Details -->
+            <div class="col-md-6">
 
-                <!-- ================================================= -->
-                <!-- PRODUCT DETAILS -->
-                <!-- ================================================= -->
+                <span class="category-badge">
+                    {{ product.category.name }}
+                </span>
 
-                <div class="col-lg-6">
+                <h1 class="product-name">
+                    {{ product.name }}
+                </h1>
 
-                    <div class="product-detail-content">
+                <div class="product-price">
+                    ₹{{ product.price }}
+                </div>
 
+                <p class="product-description">
+                    {{ product.description }}
+                </p>
 
-                        <!-- CATEGORY -->
+                <p>
+                    <strong>Availability:</strong>
 
-                        <div class="product-category">
+                    {% if product.stock > 0 %}
+                        <span class="stock-available">
+                            In Stock ({{ product.stock }} available)
+                        </span>
+                    {% else %}
+                        <span class="stock-out">
+                            Out of Stock
+                        </span>
+                    {% endif %}
+                </p>
 
-                            <i class="bi bi-tag-fill"></i>
+                <!-- Add to Cart -->
+                {% if product.stock > 0 %}
 
-                            {{ product.category.name }}
+                    {% if user.is_authenticated %}
 
-                        </div>
+                        <form method="POST"
+                              action="{% url 'add_to_cart' product.id %}">
 
+                            {% csrf_token %}
 
+                            <label for="quantity" class="form-label">
+                                <strong>Quantity:</strong>
+                            </label>
 
-                        <!-- NAME -->
+                            <br>
 
-                        <h1 class="product-title">
+                            <input type="number"
+                                   id="quantity"
+                                   name="quantity"
+                                   value="1"
+                                   min="1"
+                                   max="{{ product.stock }}"
+                                   class="quantity-input"
+                                   required>
 
-                            {{ product.name }}
+                            <br>
 
-                        </h1>
-
-
-
-                        <!-- RATING UI -->
-
-                        <div class="product-rating">
-
-                            ★★★★★
-
-                            <span class="text-secondary ms-2">
-                                PetShop Product
-                            </span>
-
-                        </div>
-
-
-
-                        <!-- PRICE -->
-
-                        <div class="product-price">
-
-                            ₹{{ product.price }}
-
-                        </div>
-
-
-
-                        <!-- DESCRIPTION -->
-
-                        <div class="product-description">
-
-                            {{ product.description }}
-
-                        </div>
-
-
-
-                        <!-- STOCK -->
-
-                        <div class="stock-box">
-
-                            {% if product.stock > 0 %}
-
-                                <span class="stock-available">
-
-                                    <i class="bi bi-check-circle-fill me-1"></i>
-
-                                    {{ product.stock }}
-                                    items available
-
-                                </span>
-
-                            {% else %}
-
-                                <span class="stock-out">
-
-                                    <i class="bi bi-x-circle-fill me-1"></i>
-
-                                    Out of stock
-
-                                </span>
-
-                            {% endif %}
-
-                        </div>
-
-
-
-                        <!-- ================================================= -->
-                        <!-- QUANTITY -->
-                        <!-- ================================================= -->
-
-                        {% if product.stock > 0 %}
-
-
-                            <div class="quantity-title">
-
-                                Quantity
-
-                            </div>
-
-
-                            <div
-                                class="quantity-box"
-                                id="quantityBox"
-                                data-stock="{{ product.stock }}">
-
-
-                                <button
-                                    type="button"
-                                    class="quantity-btn"
-                                    onclick="decreaseQuantity()">
-
-                                    −
-
-                                </button>
-
-
-                                <input
-                                    type="number"
-                                    id="quantity"
-                                    class="quantity-input"
-                                    value="1"
-                                    min="1"
-                                    max="{{ product.stock }}"
-                                    readonly>
-
-
-                                <button
-                                    type="button"
-                                    class="quantity-btn"
-                                    onclick="increaseQuantity()">
-
-                                    +
-
-                                </button>
-
-                            </div>
-
-
-
-                            <!-- ADD TO CART -->
-
-                            <button
-                                type="button"
-                                class="add-cart-btn"
-                                onclick="addToCart()">
-
-                                <i class="bi bi-cart-plus me-2"></i>
-
-                                Add to Cart
-
+                            <button type="submit" class="cart-btn">
+                                🛒 Add to Cart
                             </button>
 
+                        </form>
 
-                        {% else %}
+                    {% else %}
 
+                        <p class="text-muted mt-3">
+                            Please sign in to add products to your cart.
+                        </p>
 
-                            <!-- OUT OF STOCK -->
-
-                            <button
-                                type="button"
-                                class="disabled-cart-btn"
-                                disabled>
-
-                                <i class="bi bi-x-circle me-2"></i>
-
-                                Out of Stock
-
-                            </button>
-
-
-                        {% endif %}
-
-
-
-                        <!-- ================================================= -->
-                        <!-- PRODUCT INFO -->
-                        <!-- ================================================= -->
-
-                        <div class="product-info">
-
-
-                            <div class="info-row">
-
-                                <span>
-
-                                    <i class="bi bi-hash me-1"></i>
-
-                                    Product ID
-
-                                </span>
-
-                                <strong>
-
-                                    #{{ product.id }}
-
-                                </strong>
-
-                            </div>
-
-
-
-                            <div class="info-row">
-
-                                <span>
-
-                                    <i class="bi bi-tag me-1"></i>
-
-                                    Category
-
-                                </span>
-
-                                <strong>
-
-                                    {{ product.category.name }}
-
-                                </strong>
-
-                            </div>
-
-
-
-                            <div class="info-row">
-
-                                <span>
-
-                                    <i class="bi bi-box-seam me-1"></i>
-
-                                    Availability
-
-                                </span>
-
-
-                                {% if product.stock > 0 %}
-
-                                    <strong class="text-success">
-
-                                        In Stock
-
-                                    </strong>
-
-                                {% else %}
-
-                                    <strong class="text-danger">
-
-                                        Out of Stock
-
-                                    </strong>
-
-                                {% endif %}
-
-
-                            </div>
-
-
-                        </div>
-
-
-
-                        <!-- BACK -->
-
-                        <a
-                            href="{% url 'product_list' %}"
-                            class="back-btn">
-
-                            <i class="bi bi-arrow-left"></i>
-
-                            Back to Products
-
+                        <a href="{% url 'login' %}" class="cart-btn">
+                            Sign In to Continue
                         </a>
 
+                    {% endif %}
 
-                    </div>
+                {% else %}
 
-                </div>
+                    <button class="cart-btn" disabled>
+                        Out of Stock
+                    </button>
+
+                {% endif %}
+
+                <br>
+
+                <a href="{% url 'product_list' %}" class="back-btn">
+                    ← Back to Products
+                </a>
 
             </div>
 
@@ -961,88 +253,7 @@
 
     </div>
 
-</section>
-
-
-
-<!-- ===================================================== -->
-<!-- INTERNAL JAVASCRIPT -->
-<!-- ===================================================== -->
-
-<script>
-
-
-function getMaxStock() {
-
-    const quantityBox =
-        document.getElementById("quantityBox");
-
-    return parseInt(
-        quantityBox.dataset.stock
-    );
-
-}
-
-
-
-function increaseQuantity() {
-
-    const quantity =
-        document.getElementById("quantity");
-
-    const maxStock =
-        getMaxStock();
-
-    const currentValue =
-        parseInt(quantity.value);
-
-
-    if (currentValue < maxStock) {
-
-        quantity.value =
-            currentValue + 1;
-
-    }
-
-}
-
-
-
-function decreaseQuantity() {
-
-    const quantity =
-        document.getElementById("quantity");
-
-    const currentValue =
-        parseInt(quantity.value);
-
-
-    if (currentValue > 1) {
-
-        quantity.value =
-            currentValue - 1;
-
-    }
-
-}
-
-
-
-function addToCart() {
-
-    const quantity =
-        document.getElementById("quantity").value;
-
-
-    alert(
-        "{{ product.name }} × "
-        + quantity
-        + " added to cart! 🛒"
-    );
-
-}
-
-</script>
-
+</div>
 
 {% endblock %}
+```

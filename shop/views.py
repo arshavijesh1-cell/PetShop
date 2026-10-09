@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product, Category
+from .models import Product, Category, CartItem
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from decimal import Decimal
 
 
 def home(request):
@@ -252,3 +255,89 @@ def user_logout(request):
     return redirect('home')
 
 
+
+
+@login_required
+@require_POST
+def add_to_cart(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+
+    try:
+        quantity = int(request.POST.get('quantity', 1))
+    except (ValueError, TypeError):
+        quantity = 1
+
+    if quantity < 1:
+        quantity = 1
+
+    if product.stock <= 0:
+        messages.error(request, 'This product is out of stock.')
+        return redirect('product_list')
+
+    item, created = CartItem.objects.get_or_create(
+        user=request.user,
+        product=product,
+        defaults={'quantity': min(quantity, product.stock)}
+    )
+
+    if not created:
+        item.quantity = min(
+            item.quantity + quantity,
+            product.stock
+        )
+        item.save()
+
+    messages.success(request, 'Product added to cart.')
+    return redirect('cart')
+
+
+@login_required
+def cart(request):
+    cart_items = CartItem.objects.filter(
+        user=request.user
+    ).select_related('product', 'product__category')
+
+    total = sum(
+        (item.subtotal for item in cart_items),
+        Decimal('0.00')
+    )
+
+    return render(request, 'cart.html', {
+        'cart_items': cart_items,
+        'total': total,
+    })
+
+
+@login_required
+@require_POST
+def update_cart(request, product_id):
+    item = get_object_or_404(
+        CartItem,
+        user=request.user,
+        product_id=product_id
+    )
+
+    try:
+        quantity = int(request.POST.get('quantity', 1))
+    except (ValueError, TypeError):
+        quantity = 1
+
+    if quantity <= 0 or item.product.stock <= 0:
+        item.delete()
+    else:
+        item.quantity = min(quantity, item.product.stock)
+        item.save()
+
+    return redirect('cart')
+
+
+@login_required
+@require_POST
+def remove_from_cart(request, product_id):
+    CartItem.objects.filter(
+        user=request.user,
+        product_id=product_id
+    ).delete()
+
+    messages.success(request, 'Product removed from cart.')
+    return redirect('cart')

@@ -1,1003 +1,286 @@
+```html
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PetShop{% endblock %}</title>
 
-    <title>
-        {% block title %}PetShop{% endblock %}
-    </title>
-
-
-    <!-- ================= BOOTSTRAP CSS ================= -->
-
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet">
-
-
-    <!-- ================= BOOTSTRAP ICONS ================= -->
-
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-
-    <!-- ================= INTERNAL CSS ================= -->
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 
     <style>
-
-        /* ================= GENERAL ================= */
-
         * {
             box-sizing: border-box;
         }
 
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-
         body {
             margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: Arial, sans-serif;
             background: #f8f9fa;
-            color: #222;
+            color: #333;
         }
 
-
-        a {
-            text-decoration: none;
-        }
-
-
-        /* ================= NAVBAR ================= */
-
+        /* Navbar */
         .pet-navbar {
-            background: #ffffff;
+            background: white;
             padding: 14px 0;
-
-            box-shadow:
-                0 2px 15px rgba(0, 0, 0, 0.08);
-
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         }
 
-
-        /* ================= LOGO ================= */
-
-        .pet-logo {
-            font-size: 28px;
-            font-weight: 800;
-            color: #222;
-            letter-spacing: -0.5px;
+        .pet-brand {
+            font-size: 27px;
+            font-weight: bold;
+            color: #ff7a00 !important;
         }
-
-
-        .pet-logo:hover {
-            color: #222;
-        }
-
-
-        .pet-logo .orange {
-            color: #ff7a00;
-        }
-
-
-        .logo-paw {
-            font-size: 25px;
-            margin-right: 4px;
-        }
-
-
-        /* ================= NAV LINKS ================= */
 
         .pet-navbar .nav-link {
-            color: #333 !important;
-            font-size: 15px;
+            color: #333;
             font-weight: 600;
-
-            padding: 9px 15px !important;
-
-            border-radius: 8px;
-
-            transition: 0.3s;
+            margin-left: 12px;
         }
-
 
         .pet-navbar .nav-link:hover {
-            color: #ff7a00 !important;
-            background: #fff4e8;
-        }
-
-
-        .pet-navbar .nav-link.active {
-            color: #ff7a00 !important;
-        }
-
-
-        /* ================= CART ================= */
-
-        .cart-link {
-            color: #333;
-            font-size: 15px;
-            font-weight: 600;
-
-            padding: 9px 15px;
-
-            border-radius: 8px;
-
-            transition: 0.3s;
-        }
-
-
-        .cart-link:hover {
             color: #ff7a00;
-            background: #fff4e8;
         }
 
-
-        .cart-icon {
-            font-size: 18px;
-            margin-right: 4px;
-        }
-
-
-        /* ================= LOGIN BUTTON ================= */
-
-        .auth-btn {
+        .nav-btn {
+            display: inline-block;
             background: #ff7a00;
             color: white !important;
-
-            padding: 10px 21px !important;
-
-            border-radius: 25px;
-
+            padding: 9px 18px;
+            border-radius: 7px;
+            text-decoration: none;
+            border: none;
             font-weight: 600;
-
-            margin-left: 8px;
-
-            transition: 0.3s;
         }
 
-
-        .auth-btn:hover {
+        .nav-btn:hover {
             background: #e66d00;
-            color: white !important;
-
-            transform: translateY(-1px);
         }
 
-
-        /* ================= USERNAME ================= */
-
-        .user-welcome {
-            display: flex;
-            align-items: center;
-
-            color: #444;
-
-            font-size: 14px;
+        .logout-btn {
+            background: none;
+            border: none;
+            color: #333;
             font-weight: 600;
-
-            margin-left: 10px;
-
             padding: 8px 12px;
         }
 
-
-        .user-icon {
-            width: 32px;
-            height: 32px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            background: #fff4e8;
-
-            color: #ff7a00;
-
-            border-radius: 50%;
-
-            margin-right: 7px;
-        }
-
-
-        /* ================= MOBILE NAVBAR ================= */
-
-        .navbar-toggler {
-            border: none;
-            padding: 6px 8px;
-        }
-
-
-        .navbar-toggler:focus {
-            box-shadow: none;
-        }
-
-
-        .navbar-toggler-icon {
-            width: 25px;
-            height: 25px;
-        }
-
-
-        /* ================= PAGE CONTENT ================= */
-
-        .main-content {
-            min-height: 65vh;
-        }
-
-
-        .page-section {
-            padding: 70px 0;
-        }
-
-
-        .section-title {
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 10px;
-        }
-
-
-        .section-subtitle {
-            color: #777;
-            margin-bottom: 40px;
-        }
-
-
-        .orange {
+        .logout-btn:hover {
             color: #ff7a00;
         }
 
-
-        /* ================= COMMON BUTTON ================= */
-
-        .btn-pet {
-            background: #ff7a00;
-            color: white;
-
-            border: none;
-
-            padding: 11px 24px;
-
-            border-radius: 25px;
-
-            font-weight: 600;
-
-            transition: 0.3s;
+        /* Main content */
+        main {
+            min-height: 70vh;
+            padding-top: 25px;
+            padding-bottom: 40px;
         }
 
-
-        .btn-pet:hover {
-            background: #e66d00;
-            color: white;
-
-            transform: translateY(-2px);
-        }
-
-
-        /* ================= ALERT ================= */
-
-        .message-container {
-            padding-top: 20px;
-        }
-
-
-        .alert {
-            border-radius: 10px;
-            border: none;
-        }
-
-
-        /* ================= FOOTER ================= */
-
+        /* Footer */
         .pet-footer {
-            background: #202020;
+            background: #222;
             color: white;
-
-            margin-top: 70px;
-
-            padding: 55px 0 20px;
+            padding: 30px 0 15px;
+            margin-top: 30px;
         }
 
-
-        .footer-logo {
-            font-size: 24px;
-            font-weight: 800;
+        .pet-footer h5 {
+            color: #ff7a00;
+            font-weight: bold;
             margin-bottom: 15px;
         }
 
-
-        .footer-logo span {
-            color: #ff7a00;
-        }
-
-
-        .footer-description {
-            color: #aaa;
-            line-height: 1.7;
-            max-width: 400px;
-        }
-
-
-        .footer-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 18px;
-        }
-
-
-        .footer-link {
-            color: #aaa;
+        .pet-footer a {
+            color: #ddd;
+            text-decoration: none;
             display: block;
-            margin-bottom: 10px;
-
-            transition: 0.3s;
+            margin-bottom: 8px;
         }
 
-
-        .footer-link:hover {
+        .pet-footer a:hover {
             color: #ff7a00;
-            padding-left: 4px;
         }
 
-
-        .footer-contact {
-            color: #aaa;
-            margin-bottom: 10px;
+        .footer-bottom {
+            border-top: 1px solid #555;
+            margin-top: 20px;
+            padding-top: 15px;
+            text-align: center;
+            color: #bbb;
         }
 
-
-        .footer-contact i {
-            color: #ff7a00;
-            margin-right: 8px;
+        .alert {
+            margin-top: 15px;
         }
-
-
-        .footer-divider {
-            border-color: #444;
-            margin: 35px 0 20px;
-        }
-
-
-        .copyright {
-            color: #777;
-            font-size: 14px;
-        }
-
-
-        /* ================= SOCIAL ICONS ================= */
-
-        .social-icon {
-            width: 38px;
-            height: 38px;
-
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 50%;
-
-            background: #333;
-            color: white;
-
-            margin-right: 7px;
-
-            transition: 0.3s;
-        }
-
-
-        .social-icon:hover {
-            background: #ff7a00;
-            color: white;
-
-            transform: translateY(-3px);
-        }
-
-
-        /* ================= RESPONSIVE ================= */
-
-        @media (max-width: 991px) {
-
-            .pet-navbar .nav-link {
-                margin-top: 5px;
-            }
-
-
-            .cart-link {
-                display: block;
-                margin-top: 5px;
-            }
-
-
-            .auth-btn {
-                display: inline-block;
-                margin-top: 8px;
-                margin-left: 0;
-            }
-
-
-            .user-welcome {
-                margin-left: 0;
-                margin-top: 8px;
-            }
-
-        }
-
-
-        @media (max-width: 576px) {
-
-            .pet-logo {
-                font-size: 24px;
-            }
-
-
-            .logo-paw {
-                font-size: 22px;
-            }
-
-
-            .page-section {
-                padding: 45px 0;
-            }
-
-
-            .section-title {
-                font-size: 27px;
-            }
-
-        }
-
     </style>
 
+    {% block extra_css %}{% endblock %}
 </head>
-
 
 <body>
 
-
-<!-- ===================================================== -->
-<!-- NAVBAR -->
-<!-- ===================================================== -->
-
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg pet-navbar">
-
     <div class="container">
 
-
-        <!-- LOGO -->
-
-        <a
-            class="pet-logo"
-            href="{% url 'home' %}">
-
-            <span class="logo-paw">🐾</span>
-
-            <span class="orange">Pet</span>Shop
-
+        <a class="navbar-brand pet-brand" href="{% url 'home' %}">
+            🐾 PetShop
         </a>
 
-
-        <!-- MOBILE MENU BUTTON -->
-
-        <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#petNavbar"
-            aria-controls="petNavbar"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#petNavbar"
+                aria-controls="petNavbar"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
 
             <span class="navbar-toggler-icon"></span>
-
         </button>
 
+        <div class="collapse navbar-collapse" id="petNavbar">
 
-        <!-- NAVIGATION -->
-
-        <div
-            class="collapse navbar-collapse"
-            id="petNavbar">
-
-
-            <ul
-                class="navbar-nav ms-auto align-items-lg-center">
-
-
-                <!-- HOME -->
+            <ul class="navbar-nav ms-auto align-items-lg-center">
 
                 <li class="nav-item">
-
-                    <a
-                        class="nav-link"
-                        href="{% url 'home' %}">
-
-                        <i class="bi bi-house me-1"></i>
-
+                    <a class="nav-link" href="{% url 'home' %}">
                         Home
-
                     </a>
-
                 </li>
 
-
-                <!-- PRODUCTS -->
-
                 <li class="nav-item">
-
-                    <a
-                        class="nav-link"
-                        href="{% url 'product_list' %}">
-
-                        <i class="bi bi-grid me-1"></i>
-
+                    <a class="nav-link" href="{% url 'product_list' %}">
                         Products
-
                     </a>
-
                 </li>
-
-
-                <!-- CART -->
 
                 <li class="nav-item">
-
-                    <a
-                        class="cart-link"
-                        href="#">
-
-                        <i class="bi bi-cart3 cart-icon"></i>
-
-                        Cart
-
+                    <a class="nav-link" href="{% url 'cart' %}">
+                        🛒 Cart
                     </a>
-
                 </li>
-
-
-                <!-- ================================================= -->
-                <!-- AUTHENTICATED USER -->
-                <!-- ================================================= -->
-
 
                 {% if user.is_authenticated %}
 
-
-                    <!-- USERNAME -->
-
                     <li class="nav-item">
-
-                        <div class="user-welcome">
-
-                            <span class="user-icon">
-
-                                <i class="bi bi-person-fill"></i>
-
-                            </span>
-
+                        <span class="nav-link">
                             Hi, {{ user.username }}
-
-                        </div>
-
+                        </span>
                     </li>
 
-
-                    <!-- LOGOUT -->
+                    {% if user.is_staff %}
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href="{% url 'product_create' %}">
+                                Add Product
+                            </a>
+                        </li>
+                    {% endif %}
 
                     <li class="nav-item">
-
-                        <a
-                            class="nav-link auth-btn"
-                            href="{% url 'logout' %}">
-
-                            <i class="bi bi-box-arrow-right me-1"></i>
-
-                            Logout
-
-                        </a>
-
+                        <form method="POST" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-btn">
+                                Logout
+                            </button>
+                        </form>
                     </li>
-
 
                 {% else %}
 
-
-                    <!-- REGISTER -->
-
                     <li class="nav-item">
-
-                        <a
-                            class="nav-link"
-                            href="{% url 'register' %}">
-
-                            <i class="bi bi-person-plus me-1"></i>
-
-                            Register
-
-                        </a>
-
-                    </li>
-
-
-                    <!-- SIGN IN -->
-
-                    <li class="nav-item">
-
-                        <a
-                            class="nav-link auth-btn"
-                            href="{% url 'login' %}">
-
-                            <i class="bi bi-box-arrow-in-right me-1"></i>
-
+                        <a class="nav-link" href="{% url 'login' %}">
                             Sign In
-
                         </a>
-
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-btn" href="{% url 'register' %}">
+                            Register
+                        </a>
+                    </li>
 
                 {% endif %}
-
 
             </ul>
-
         </div>
-
     </div>
-
 </nav>
 
+<!-- Messages -->
+<div class="container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show"
+                 role="alert">
 
+                {{ message }}
 
-<!-- ===================================================== -->
-<!-- MESSAGES -->
-<!-- ===================================================== -->
-
-{% if messages %}
-
-<div class="container message-container">
-
-    {% for message in messages %}
-
-    <div
-        class="alert alert-{{ message.tags }}
-               alert-dismissible fade show"
-        role="alert">
-
-        <i class="bi bi-info-circle me-2"></i>
-
-        {{ message }}
-
-
-        <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close">
-        </button>
-
-    </div>
-
-    {% endfor %}
-
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close">
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
 
-{% endif %}
-
-
-
-<!-- ===================================================== -->
-<!-- PAGE CONTENT -->
-<!-- ===================================================== -->
-
-<main class="main-content">
-
+<!-- Page Content -->
+<main>
     {% block content %}
-
     {% endblock %}
-
 </main>
 
-
-
-<!-- ===================================================== -->
-<!-- FOOTER -->
-<!-- ===================================================== -->
-
+<!-- Footer -->
 <footer class="pet-footer">
-
     <div class="container">
 
-        <div class="row g-4">
+        <div class="row">
 
-
-            <!-- ABOUT -->
-
-            <div class="col-lg-5 col-md-6">
-
-                <div class="footer-logo">
-
-                    🐾
-
-                    <span>Pet</span>Shop
-
-                </div>
-
-
-                <p class="footer-description">
-
-                    Everything your lovely pets need,
-                    all in one place. Find quality food,
-                    toys and accessories for your furry friends.
-
+            <div class="col-md-6 mb-3">
+                <h5>🐾 PetShop</h5>
+                <p>
+                    Everything your pet needs in one place.
+                    Quality products for your lovely pets.
                 </p>
-
-
-                <!-- SOCIAL -->
-
-                <div class="mt-4">
-
-                    <a
-                        href="#"
-                        class="social-icon">
-
-                        <i class="bi bi-facebook"></i>
-
-                    </a>
-
-
-                    <a
-                        href="#"
-                        class="social-icon">
-
-                        <i class="bi bi-instagram"></i>
-
-                    </a>
-
-
-                    <a
-                        href="#"
-                        class="social-icon">
-
-                        <i class="bi bi-twitter-x"></i>
-
-                    </a>
-
-
-                    <a
-                        href="#"
-                        class="social-icon">
-
-                        <i class="bi bi-whatsapp"></i>
-
-                    </a>
-
-                </div>
-
             </div>
 
-
-
-            <!-- QUICK LINKS -->
-
-            <div class="col-lg-3 col-md-6">
-
-                <h5 class="footer-title">
-
-                    Quick Links
-
-                </h5>
-
-
-                <a
-                    href="{% url 'home' %}"
-                    class="footer-link">
-
-                    <i class="bi bi-chevron-right me-1"></i>
-
-                    Home
-
-                </a>
-
-
-                <a
-                    href="{% url 'product_list' %}"
-                    class="footer-link">
-
-                    <i class="bi bi-chevron-right me-1"></i>
-
-                    Products
-
-                </a>
-
-
-                {% if user.is_authenticated %}
-
-                <a
-                    href="{% url 'logout' %}"
-                    class="footer-link">
-
-                    <i class="bi bi-chevron-right me-1"></i>
-
-                    Logout
-
-                </a>
-
-                {% else %}
-
-                <a
-                    href="{% url 'login' %}"
-                    class="footer-link">
-
-                    <i class="bi bi-chevron-right me-1"></i>
-
-                    Sign In
-
-                </a>
-
-                {% endif %}
-
+            <div class="col-md-3 mb-3">
+                <h5>Quick Links</h5>
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'product_list' %}">Products</a>
+                <a href="{% url 'cart' %}">Shopping Cart</a>
             </div>
 
-
-
-            <!-- CONTACT -->
-
-            <div class="col-lg-4 col-md-6">
-
-                <h5 class="footer-title">
-
-                    Contact Us
-
-                </h5>
-
-
-                <div class="footer-contact">
-
-                    <i class="bi bi-envelope-fill"></i>
-
-                    support@petshop.com
-
-                </div>
-
-
-                <div class="footer-contact">
-
-                    <i class="bi bi-telephone-fill"></i>
-
-                    +91 98765 43210
-
-                </div>
-
-
-                <div class="footer-contact">
-
-                    <i class="bi bi-geo-alt-fill"></i>
-
-                    Kerala, India
-
-                </div>
-
+            <div class="col-md-3 mb-3">
+                <h5>Contact</h5>
+                <p>Email: support@petshop.com</p>
+                <p>Phone: +91 9876543210</p>
             </div>
 
         </div>
 
-
-        <!-- DIVIDER -->
-
-        <hr class="footer-divider">
-
-
-        <!-- COPYRIGHT -->
-
-        <div
-            class="text-center copyright">
-
-            © 2026 PetShop.
-            All rights reserved.
-
+        <div class="footer-bottom">
+            <p class="mb-0">
+                &copy; {% now "Y" %} PetShop. All rights reserved.
+            </p>
         </div>
 
     </div>
-
 </footer>
 
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-
-<!-- ===================================================== -->
-<!-- BOOTSTRAP JAVASCRIPT -->
-<!-- ===================================================== -->
-
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
-</script>
-
-
-
-<!-- ===================================================== -->
-<!-- INTERNAL JAVASCRIPT -->
-<!-- ===================================================== -->
-
-<script>
-
-    /*
-        Automatically hide messages
-        after 4 seconds
-    */
-
-    setTimeout(function () {
-
-        const alerts =
-            document.querySelectorAll('.alert');
-
-
-        alerts.forEach(function (alert) {
-
-            const bsAlert =
-                bootstrap.Alert.getOrCreateInstance(alert);
-
-            bsAlert.close();
-
-        });
-
-    }, 4000);
-
-
-    /*
-        Close mobile navbar
-        after clicking a link
-    */
-
-    const navLinks =
-        document.querySelectorAll(
-            '.navbar-nav .nav-link'
-        );
-
-
-    const navbarCollapse =
-        document.querySelector(
-            '#petNavbar'
-        );
-
-
-    navLinks.forEach(function (link) {
-
-        link.addEventListener(
-            'click',
-            function () {
-
-                if (
-                    window.innerWidth < 992 &&
-                    navbarCollapse.classList.contains('show')
-                ) {
-
-                    bootstrap.Collapse
-                        .getOrCreateInstance(
-                            navbarCollapse
-                        )
-                        .hide();
-
-                }
-
-            }
-        );
-
-    });
-
-</script>
-
+{% block extra_js %}{% endblock %}
 
 </body>
-
 </html>
+```
