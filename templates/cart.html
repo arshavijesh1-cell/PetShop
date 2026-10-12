@@ -1,4 +1,4 @@
-```html
+
 {% extends 'base.html' %}
 
 {% block title %}My Cart | PetShop{% endblock %}
@@ -34,6 +34,7 @@
         padding: 9px 16px;
         border-radius: 6px;
         text-decoration: none;
+        display: inline-block;
     }
 
     .orange-btn:hover {
@@ -47,6 +48,24 @@
         border: none;
         padding: 7px 12px;
         border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .remove-btn:hover {
+        background: #bb2d3b;
+    }
+
+    .quantity-input {
+        max-width: 90px;
+    }
+
+    .subtotal {
+        color: #ff7a00;
+        font-weight: bold;
+    }
+
+    .empty-cart {
+        padding: 40px 20px;
     }
 </style>
 
@@ -59,9 +78,12 @@
         {% for item in cart_items %}
 
             <div class="cart-card">
+
                 <div class="row align-items-center">
 
-                    <div class="col-md-2 text-center">
+                    <!-- Product Image -->
+                    <div class="col-md-2 text-center mb-3 mb-md-0">
+
                         {% if item.product.image %}
                             <img src="{{ item.product.image.url }}"
                                  class="cart-image"
@@ -69,77 +91,107 @@
                         {% else %}
                             <div style="font-size: 45px;">🐾</div>
                         {% endif %}
+
                     </div>
 
-                    <div class="col-md-4">
+                    <!-- Product Details -->
+                    <div class="col-md-4 mb-3 mb-md-0">
+
                         <h5>{{ item.product.name }}</h5>
+
                         <p class="mb-1">
-                            Price: ₹{{ item.product.price }}
+                            Price: ₹{{ item.product.price|floatformat:2 }}
                         </p>
+
                         <p class="mb-0">
-                            Subtotal: ₹{{ item.subtotal }}
+                            Subtotal:
+                            <span class="subtotal">
+                                ₹{{ item.subtotal|floatformat:2 }}
+                            </span>
                         </p>
+
                     </div>
 
-                    <div class="col-md-3">
+                    <!-- Quantity -->
+                    <div class="col-md-3 mb-3 mb-md-0">
+
                         <form method="POST"
                               action="{% url 'update_cart' item.product.id %}">
                             {% csrf_token %}
 
-                            <label class="form-label">Quantity</label>
+                            <label class="form-label">
+                                Quantity
+                            </label>
 
-                            <div class="d-flex gap-2">
-                                <input type="number"
-                                       name="quantity"
-                                       value="{{ item.quantity }}"
-                                       min="1"
-                                       max="{{ item.product.stock }}"
-                                       class="form-control"
-                                       style="max-width: 90px;"
-                                       required>
+                            <input type="number"
+                                   name="quantity"
+                                   value="{{ item.quantity }}"
+                                   min="1"
+                                   max="{{ item.product.stock }}"
+                                   class="form-control quantity-input"
+                                   required
+                                   onchange="this.form.submit()">
 
-                                <button type="submit" class="orange-btn">
-                                    Update
-                                </button>
-                            </div>
                         </form>
+
+                        <small class="text-muted">
+                            Change quantity to update
+                        </small>
+
                     </div>
 
-                    <div class="col-md-3 mt-3 mt-md-0">
+                    <!-- Remove Button -->
+                    <div class="col-md-3">
+
                         <form method="POST"
                               action="{% url 'remove_from_cart' item.product.id %}">
                             {% csrf_token %}
 
-                            <button type="submit" class="remove-btn">
-                                Remove
+                            <button type="submit"
+                                    class="remove-btn">
+                                🗑 Remove
                             </button>
+
                         </form>
+
                     </div>
 
                 </div>
+
             </div>
 
         {% endfor %}
 
+        <!-- Cart Total -->
         <div class="cart-card text-end">
-            <h4>Total: ₹{{ total }}</h4>
 
-            <a href="{% url 'product_list' %}" class="orange-btn">
-                Continue Shopping
+            <h4>
+                Total: ₹{{ total|floatformat:2 }}
+            </h4>
+
+            <a href="{% url 'product_list' %}"
+               class="orange-btn">
+                ← Continue Shopping
             </a>
+
         </div>
 
     {% else %}
 
-        <div class="cart-card text-center py-5">
+        <!-- Empty Cart -->
+        <div class="cart-card text-center empty-cart">
+
             <h4>Your cart is empty 🛒</h4>
+
             <p class="text-muted">
                 You haven't added any products yet.
             </p>
 
-            <a href="{% url 'product_list' %}" class="orange-btn">
+            <a href="{% url 'product_list' %}"
+               class="orange-btn">
                 Shop Now
             </a>
+
         </div>
 
     {% endif %}
@@ -147,4 +199,3 @@
 </div>
 
 {% endblock %}
-```
